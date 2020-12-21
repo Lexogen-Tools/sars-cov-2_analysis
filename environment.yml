@@ -1,0 +1,13 @@
+name: lex_sars-cov-2
+channels:
+- conda-forge
+- bioconda 
+- defaults
+- anaconda
+dependencies:
+- samtools=1.9
+- cutadapt=2.5
+- bowtie2
+- subread=1.6.4
+- gawk=5.0.0
+- python=3.6

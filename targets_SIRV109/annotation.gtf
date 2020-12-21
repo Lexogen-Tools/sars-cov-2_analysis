@@ -1,0 +1,10 @@
+ORF_1a	Lexogen	target	1	164	.	+	.	description "ORF_1a"; id "ORF_1a"; name "ORF_1a"; target_id "t_001"; 
+ORF_1a	Lexogen	feature	1	164	.	+	.	description "ORF_1a"; feature_id "f_001_001"; id "ORF_1a"; name "ORF_1a"; target_id "t_001"; 
+5p_spike_cds	Lexogen	target	1	220	.	+	.	description "5p_spike_cds"; id "5p_spike_cds"; name "5p_spike_cds"; target_id "t_002"; 
+5p_spike_cds	Lexogen	feature	1	220	.	+	.	description "5p_spike_cds"; feature_id "f_002_001"; id "5p_spike_cds"; name "5p_spike_cds"; target_id "t_002"; 
+O-linked_glycan_residue_region	Lexogen	target	1	183	.	+	.	description "O-linked_glycan_residue_region"; id "O-linked_glycan_residue_region"; name "O-linked_glycan_residue_region"; target_id "t_004"; 
+O-linked_glycan_residue_region	Lexogen	feature	1	183	.	+	.	description "O-linked_glycan_residue_region"; feature_id "f_004_001"; id "O-linked_glycan_residue_region"; name "O-linked_glycan_residue_region"; target_id "t_004"; 
+charite-similar_gene_E	Lexogen	target	1	205	.	+	.	description "charite-similar_gene_E"; id "charite-similar_gene_E"; name "charite-similar_gene_E"; target_id "t_005"; 
+charite-similar_gene_E	Lexogen	feature	1	205	.	+	.	description "charite-similar_gene_E"; feature_id "f_005_001"; id "charite-similar_gene_E"; name "charite-similar_gene_E"; target_id "t_005"; 
+SIRV109	Lexogen	target	1	463	.	+	.	description "SIRV109"; id "SIRV109"; name "SIRV109"; target_id "t_006"; 
+SIRV109	Lexogen	feature	1	463	.	+	.	description "SIRV109"; feature_id "f_006_001"; id "SIRV109"; name "SIRV109"; target_id "t_006"; 
