@@ -1,7 +1,7 @@
 # SARS-CoV-2 analysis script
 **This analysis script is implemented as a bash routine and is intended to work in combination with Lexogen's SARS-CoV-2 test kit**
 
-Lexogen developed a mass screening test to detect copies of the SARS-CoV-2 virus in human samples and is optimized for the application of thousands of samples in one sequencing run. To enable a quick and structured analysis of the samples after they were sequenced and demultiplexed, Lexogen provides this analysis script as a working solution and recommendation on the analysis procedure.
+Lexogen developed a mass screening test to detect copies of the SARS-CoV-2 virus in human samples, which is optimized for the application to thousands of samples in one sequencing run. To enable a quick and structured analysis of the samples after sequencing and i7/i5 demultiplexing, Lexogen provides this analysis script as a working solution and recommendation for the analysis procedure.
 ## Requirements
 The script uses the following software tools and scripts in its routine:
 ```
@@ -17,7 +17,7 @@ The script uses the following software tools and scripts in its routine:
 
 The other tools can either be installed and made available in the user's PATH or installed into a conda environment and used in this environment. If you use your own installations, please carefully read the content of the environment.yml file to check if the versions of your installed tools are compatible with the versions listed in this file. Also, please ensure that the tools are indeed available in your path.
 
-You can use conda (anaconda, miniconda) to install the tools into a new conda environment and use this environment, 'lex_sars-cov-2', by calling 
+You can use conda (anaconda, miniconda) to install the tools into a new conda environment and use this environment, e.g. named 'lex_sars-cov-2', by calling 
 ```
 $ conda env create -f /path/to/environment.yml && conda activate lex_sars-cov-2
 ```
@@ -29,24 +29,22 @@ $ ./start_analysis.sh -i path/to/demultiplexed_data/R1.fastq.gz -s path/to/sampl
 ```
 **path/to/demultiplexed_data/R1.fastq.gz** is the path to a gzipped fastq file, which contains the reads of the sample(s) of this experiment.
 
-**path/to/sample-sheet.csv** is the path to a sample sheet that lists the samples in the fastq file and their assigned barcodes to use for demultiplexing.
+**path/to/sample-sheet.csv** is the path to a sample sheet that lists the samples in the fastq file and their associated Lexogen i1 sample barcodes to use for i1 demultiplexing (see section "Demultiplexing with idemux").
 
 **path/to/output_directory** is the path to a directory to write intermediate analysis results, the quantification summary and the prediction table.
 
 **[nr of parallel jobs]** is the number of parallel jobs to be processed with xargs and the number of threads available to idemux. Depending on the resources available on your machine, increasing this value might significantly shorten the duration of the analysis.
 
 ## The analysis procedure
-The analysis script is a bash routine that uses minimal user input to process demultiplexed, gzipped fastq files. The script is written with the assumption that a relatively high number of samples are to be processed with this script, with moderate to low read depth per individual sample. The script uses xargs to submit tasks to be processed in parallel to sub processes, if possible. We recommend to use the script on a workstation or server that has a high number of available CPUs to shorten the effective duration of the calculations with a sensible use of the -p argument (There is little use in operating the script with 30 parallel jobs on a machine with 4 CPU cores).
+The analysis script is a bash routine, which processes i7/i5 demultiplexed, gzipped fastq files. The script allows to analyze up to 96 samples within a single gzipped fastq file. We recommend a low to moderate read depth for each sample and to use a server with a sufficient number of cores for efficient parallelization. The number of parallel processes can be specified with the -p argument.
 
-The following sections outline the analysis steps that are implemented in the script.
+The following sections outline the analysis steps implemented in the script.
 ### Demultiplexing with idemux
 ```
 $ idemuxCPP --i1-read=1 --i1-start=1 -1 path/to/demultiplexed_data/R1.fastq.gz -s path/to/sample-sheet.csv -w [nr of threads] -p [nr of threads] -o path/to/outputdir/idemuxxed/
 ```
-The library preparation includes the addition of inline barcodes to enhance the sample resolution in the RNA-Seq experiment. The script therefore starts with a call of iDemuxCPP (https://github.com/Lexogen-Tools/idemuxcpp) to demultiplex the pooled samples from the fastq file into separate fastq files per sample. The provided sample-sheet.csv file contains a set of 120 inline barcode sequences (i1) and generic sample names (sample_name). The names will be used for temporary files and directories. You can modify the names to make your samples easily identifiable. Please do not use characters that are not allowed for file and directory names in a *nix environment in the sample names.
+In addition to the use of i7/i5 indices, the library preparation introduces Lexogen's i1 sample barcodes to increase the number of simultaneously analyzed samples. The script starts after i7/i5 demultiplexing has been performed, e.g. with bcl2fastq or, more preferably, Lexogen's iDemuxCPP software (https://github.com/Lexogen-Tools/idemuxcpp). The first step in the script uses iDemuxCPP to demultiplex the gzipped fastq file according to a sample sheet which lists the names of the samples together with their associated Lexogen i1 sample barcode. A sample sheet for a set of 96 samples is given in [sample-sheet.csv](sample-sheet.csv), the first lines of which are shown below. Please note that sample names are used for the creation of temporary files and directories and must therefore conform with file name requirements in a *nix environment. 
 
-If you are familiar with the usage of iDemuxCPP and know how to demultiplex your sequencing run into a single file, preserving the index information in your read headers, you can instead provide the result of this demultiplexing and list the all the samples of your run in the sample-sheet.csv file with their complete combination of i7, i5, and i1 barcode sequences instead. The analysis script will then process all of them in one call of the script. Please see the iDemuxCPP Readme (https://github.com/Lexogen-Tools/idemuxcpp) for more information.
-The following is an example for the format of a sample-sheet
 ```
 sample_name,i7,i5,i1
 sample_001,,,CGGGAACCCGCA
@@ -63,24 +61,32 @@ sample_011,,,AGGTGGTTCTAC
 sample_012,,,TACGCCCACGTG
 ...
 ```
+If you are familiar with the use of iDemuxCPP and know how to demultiplex your sequencing run into a single fastq file, preserving the index information in your read headers, you can instead 
+
+* provide this single demultiplexed fastq file to the analysis script and 
+* list all the samples of your run in the sample-sheet.csv file together with their complete combination of i7, i5, and i1 barcode sequences
+
+The analysis script will then perform demultiplexing of i7/i5 and i1 indices together and analyze all corresponding samples in one go. For further information on how to use iDemuxCPP and demutliplex into a single fastq file preserving the index information in read headers, please refer to the iDemuxCPP Readme (https://github.com/Lexogen-Tools/idemuxcpp).
+
 ### Trimming with cutadapt
+
 ```
 $ cutadapt --quiet -m 20 -O 20 -a "polyA=A{20}" -a "QUALITY=G{20}" -n 2 path/to/outputdir/idemuxxed/${sample}.fastq.gz | \
 > cutadapt --quiet -m 20 -O 3 --nextseq-trim=10 -a "r1adapter=AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC;min_overlap=3;max_error_rate=0.100000" - | \
 > cutadapt --quiet -m 20 -O 3 -a "r1polyA=A{18}" - | \
 > cutadapt --quiet -m 20 -O 20 -g "r1adapter=AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC;min_overlap=20" --discard-trimmed -o path/to/outputdir/analysis/${sample}/R1.fastq.gz -
 ```
-Prior to the alignment the reads are analyzed and potentially trimmed with cutadapt to increase the mappability of the sample. Read-outs of fragments which end up too short contain adapter sequences which do not match to the reference and would end up unmappable. Reads which result in a length <20 or consist entirely of adapter sequences are removed. The script calls cutadapt 4 times in succession, which are connected by piping the result of one call into the subsequent one. 
+Prior to the alignment the reads are analyzed and potentially trimmed with cutadapt to increase the mappability of the sample. Read-outs of fragments which end up too short contain adapter sequences which do not match to the reference and would end up unmappable. Reads which result in a length <20 or consist entirely of adapter sequences are removed.
 ### Alignment with bowtie2
 ```
 $ bowtie2 -x targets_SIRV109/sequences --mm -U path/to/outputdir/analysis/${sample}/R1.fastq.gz --quiet -S path/to/outputdir/analysis/${sample}/Aligned.out.sam
 ```
-The library preparation generates reads of 4 locations on the SARS-CoV-2 virus and on one location of a spike-in control of Lexogen's RNA-Seq spike in controls (SIRVs, https://www.lexogen.com/sirvs/). The alignment is performed with bowtie2. The standard settings of bowtie already satisfy the requirements for this analysis.
+The library preparation generates reads at 4 locations on the SARS-CoV-2 virus genome and on one location of a spike-in control of Lexogen's RNA-Seq spike in controls (SIRVs, https://www.lexogen.com/sirvs/). The alignment is performed with bowtie2. The standard settings of bowtie already satisfy the requirements for this analysis.
 ### Counting with featureCounts
 ```
-$ featureCounts -a targets/annotation.gtf -o path/to/outputdir/analysis/${sample}/src.byfeature -t feature -g target_id -M --fraction -p -B -d 30 -C path/to/outputdir/analysis/${sample}/Aligned.out.sam
+$ featureCounts -a targets/annotation.gtf -o path/to/outputdir/analysis/${sample}/src.byfeature -t feature -g target_id -M --fraction -p -B -d 30 -s 2 -C path/to/outputdir/analysis/${sample}/Aligned.out.sam
 ```
-The alignments are counted with featureCounts using the reference file annotation.gtf. This file contains features for each target. We expect the reads to align in anti-sense direction to the reference due to the library prepration. The quantification with featueCounts therefore counts the reads on the reverse strand (argument -s 2).
+The alignments are counted with featureCounts using the reference file annotation.gtf. This file contains features for each target. We expect the reads to align in anti-sense direction to the reference due to the library preparation. The quantification with featureCounts therefore counts the reads on the reverse strand (argument -s 2).
 ### Summarization and assessment
 The summary of the quantification is written into a count matrix which lists the counts per target in the individual samples. This count matrix is used to assess the presence of the virus in the samples based on the read counts.
 ## Results
