@@ -81,9 +81,9 @@ $ cutadapt --quiet -m 20 -O 20 -a "polyA=A{20}" -a "QUALITY=G{20}" -n 2 path/to/
 Prior to alignment reads are trimmed with cutadapt. Reads which result in a length <20 or consist entirely of adapter sequences are removed.
 ### Alignment with bowtie2
 ```
-$ bowtie2 -x targets_SIRV109/sequences --mm -U path/to/outputdir/analysis/${sample}/R1.fastq.gz --quiet -S path/to/outputdir/analysis/${sample}/Aligned.out.sam
+$ bowtie2 -x targets_SIRV109/sequences --mm -L 10 -U path/to/outputdir/analysis/${sample}/R1.fastq.gz --quiet -S path/to/outputdir/analysis/${sample}/Aligned.out.sam
 ```
-The library preparation generates reads at 4 locations on the SARS-CoV-2 virus genome and on one location of a spike-in control of Lexogen's RNA-Seq spike in controls (SIRVs, https://www.lexogen.com/sirvs/). The alignment is performed with bowtie2. The standard settings of bowtie satisfy the requirements for this analysis.
+The library preparation generates reads at 4 locations on the SARS-CoV-2 virus genome and on one location of a spike-in control of Lexogen's RNA-Seq spike in controls (SIRVs, https://www.lexogen.com/sirvs/). The alignment is performed with bowtie2. 
 ### Counting with featureCounts
 ```
 $ featureCounts -a targets/annotation.gtf -o path/to/outputdir/analysis/${sample}/src.byfeature -t feature -g target_id -M --fraction -p -B -d 30 -s 2 -C path/to/outputdir/analysis/${sample}/Aligned.out.sam
