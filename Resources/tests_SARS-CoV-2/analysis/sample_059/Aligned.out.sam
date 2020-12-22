@@ -1,0 +1,7 @@
+@HD	VN:1.0	SO:unsorted
+@SQ	SN:ORF_1a	LN:165
+@SQ	SN:5p_spike_cds	LN:221
+@SQ	SN:O-linked_glycan_residue_region	LN:184
+@SQ	SN:charite-similar_gene_E	LN:206
+@SQ	SN:SIRV109	LN:464
+@PG	ID:bowtie2	PN:bowtie2	VN:2.4.2	CL:"/home/gwiktorin/anaconda3/envs/lex_sars-cov-2/bin/bowtie2-align-s --wrapper basic-0 -x /home/gwiktorin/git/sars-cov-2_analysis/targets_SIRV109/sequences -L 10 --mm --quiet -S /home/gwiktorin/tests/SARS-CoV-2//analysis/sample_059//Aligned.out.sam -U /home/gwiktorin/tests/SARS-CoV-2//analysis/sample_059//R1.fastq.gz"

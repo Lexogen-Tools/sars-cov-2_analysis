@@ -1,0 +1,10 @@
+@HD	VN:1.0	SO:unsorted
+@SQ	SN:ORF_1a	LN:165
+@SQ	SN:5p_spike_cds	LN:221
+@SQ	SN:O-linked_glycan_residue_region	LN:184
+@SQ	SN:charite-similar_gene_E	LN:206
+@SQ	SN:SIRV109	LN:464
+@PG	ID:bowtie2	PN:bowtie2	VN:2.4.2	CL:"/home/gwiktorin/anaconda3/envs/lex_sars-cov-2/bin/bowtie2-align-s --wrapper basic-0 -x /home/gwiktorin/github/sars-cov-2_analysis/targets_SIRV109/sequences -L 10 --mm --quiet -S tests_SARS-CoV-2/analysis/sample_078//Aligned.out.sam -U tests_SARS-CoV-2/analysis/sample_078//R1.fastq.gz"
+NB502007:454:H3CYNBGXH:4:22510:16490:13336	16	O-linked_glycan_residue_region	151	42	34M	*	0	0	TACTCTAATAACTCTATTGCCATACCCACAAATT	EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE	AS:i:0	XN:i:0	XM:i:0	XO:i:0	XG:i:0	NM:i:0	MD:Z:34	YT:Z:UU
+NB502007:454:H3CYNBGXH:2:22208:12858:17900	16	O-linked_glycan_residue_region	151	42	34M	*	0	0	TACTCTAATAACTCTATTGCCATACCCACAAATT	EEEEEEEEEEEEAEEEEEEEEEEEEEEEEEEEEE	AS:i:0	XN:i:0	XM:i:0	XO:i:0	XG:i:0	NM:i:0	MD:Z:34	YT:Z:UU
+NB502007:454:H3CYNBGXH:2:21312:1227:6768	16	O-linked_glycan_residue_region	151	42	34M	*	0	0	TACTCTAATAACTCTATTGCCATACCCACAAATT	EEEEEAEEEEEEEAEAAEEEEEEA6EEEEE/EEE	AS:i:0	XN:i:0	XM:i:0	XO:i:0	XG:i:0	NM:i:0	MD:Z:34	YT:Z:UU

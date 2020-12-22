@@ -1,0 +1,7 @@
+# Program:featureCounts v1.6.4; Command:"featureCounts" "-a" "/home/gwiktorin/github/sars-cov-2_analysis/targets_SIRV109/annotation.gtf" "-o" "tests_SARS-CoV-2/analysis/sample_089//src.byfeature" "-t" "feature" "-g" "target_id" "-M" "--fraction" "-p" "-B" "-d" "30" "-s" "2" "-C" "tests_SARS-CoV-2/analysis/sample_089//Aligned.out.sam" 
+Geneid	Chr	Start	End	Strand	Length	tests_SARS-CoV-2/analysis/sample_089//Aligned.out.sam
+t_001	ORF_1a	1	164	+	164	0
+t_002	5p_spike_cds	1	220	+	220	0
+t_004	O-linked_glycan_residue_region	1	183	+	183	0
+t_005	charite-similar_gene_E	1	205	+	205	0
+t_006	SIRV109	1	463	+	463	0

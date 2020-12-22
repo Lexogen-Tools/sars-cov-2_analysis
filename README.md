@@ -93,32 +93,33 @@ The summary of the quantification is written into a count matrix which lists the
 ## Test data
 To check if you properly obtained the script files and set up the tools as they are required in the script, you can use the gzipped fastq file in Resources / testdata_R1.fastq.gz to run a test of the pipeline. The expected outcome of this test is that the samples *sample_009* to *sample_016* contain reads which are properly recognized as target reads and counted as such:
 ```
-$ ./start_analysis.sh -i Resources/testdata_R1.fastq.gz -s sample-sheet.csv -o tests_SARS-CoV-2 -p 30;
+$ mkdir -p tests_SARS-CoV-2 && ./start_analysis.sh -i Resources/testdata_R1.fastq.gz -s sample-sheet.csv -o tests_SARS-CoV-2 -p 30;
 
 ...
 
-$ head -n 20 tests_SARS-CoV-2/counts_summary.tsv
-id      input reads     unmapped reads  ORF_1a  5p_spike_cds    O-linked_glycan_residue_region  charite-similar_gene_E  SIRV109
-sample_001      1185    0       1185    0       0       0       0
-sample_002      0       0       0       0       0       0       0
-sample_003      0       0       0       0       0       0       0
-sample_004      0       0       0       0       0       0       0
-sample_005      0       0       0       0       0       0       0
-sample_006      0       0       0       0       0       0       0
-sample_007      0       0       0       0       0       0       0
-sample_008      0       0       0       0       0       0       0
-sample_009      39622   2275    10910   6735    4107    8370    7225
-sample_010      46930   1908    17982   11674   7376    5645    2345
-sample_011      49410   27      20206   12685   3717    10595   2180
-sample_012      48130   1105    18311   3908    7224    13692   3890
-sample_013      49082   30      14325   12687   6365    10081   5594
-sample_014      61768   4469    21246   6460    10668   12220   6705
-sample_015      50891   1628    17322   4995    12438   8895    5613
-sample_016      60039   3367    13668   5258    2411    17512   17823
-sample_017      0       0       0       0       0       0       0
-sample_018      0       0       0       0       0       0       0
-sample_019      0       0       0       0       0       0       0
+$ head -n 20 tests_SARS-CoV-2/prediction.tsv 
+id      status
+sample_001      False
+sample_002      False
+sample_003      False
+sample_004      False
+sample_005      False
+sample_006      False
+sample_007      False
+sample_008      False
+sample_009      True
+sample_010      True
+sample_011      True
+sample_012      True
+sample_013      True
+sample_014      True
+sample_015      True
+sample_016      True
+sample_017      False
+sample_018      False
+sample_019      False
 ```
+The results that were generated in **tests_SARS-CoV-2 / prediction.tsv** with this call should match the results you can find in the directory of **Resources / prediction.tsv**.
 
 ## Results
 The results of the analysis pipeline are two tables in tab-separated text format
