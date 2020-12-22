@@ -68,7 +68,7 @@ If you are familiar with the use of iDemuxCPP and know how to demultiplex your s
 * provide this single demultiplexed fastq file to the analysis script and 
 * list all the samples of your run in the sample-sheet.csv file together with their complete combination of i7, i5, and i1 barcode sequences
 
-The analysis script will then perform demultiplexing of i7/i5 and i1 indices together and analyze all corresponding samples in one go. For further information on how to use iDemuxCPP and demutliplex into a single fastq file preserving the index information in read headers, please refer to the iDemuxCPP Readme (https://github.com/Lexogen-Tools/idemuxcpp).
+The analysis script will then perform demultiplexing of i7/i5 and i1 indices together and analyze all corresponding samples in one go. For further information on how to use iDemuxCPP and demultiplex into a single fastq file preserving the index information in read headers, please refer to the iDemuxCPP Readme (https://github.com/Lexogen-Tools/idemuxcpp).
 
 ### Trimming with cutadapt
 
